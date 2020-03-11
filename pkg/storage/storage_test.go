@@ -2,11 +2,11 @@ package storage
 
 import (
 	"fmt"
-	_ "github.com/br9k777/calendar/pkg/config"
-	"github.com/br9k777/work_11/config"
 	"os"
 	"testing"
 	"time"
+
+	"github.com/br9k777/calendar/pkg/config"
 
 	"go.uber.org/zap"
 )
