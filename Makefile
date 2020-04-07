@@ -56,7 +56,7 @@ lint: ## Run all the linters
 
 .PHONY: build
 build: ## Build a version
-	go build -o /tmp/lesson_telnet ./cmd/
+	go build -o /tmp/calendar_service ./cmd/
 # 	go build -v ./...
 
 .PHONY: clean

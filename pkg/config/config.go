@@ -7,9 +7,63 @@ import (
 	"os"
 	"time"
 
+	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
+
+type ConfigService struct {
+	Host   string
+	Port   string
+	Assets string
+}
+
+type Config struct {
+	LogConfigurationFile string
+	LogStandartChois     string
+	TestMod              bool
+	Service              ConfigService
+}
+
+// InitDefaultConfigSettings - the order and conditions for reading the configuration are indicated
+func InitDefaultConfigSettings() {
+	var err error
+	viper.SetDefault("standardLogger", "production")
+	viper.SetDefault("servicePORT", "5157")
+	viper.SetDefault("serviceHost", "localhost")
+	viper.SetConfigName(".config.yaml")
+	if err = viper.BindEnv("logConfigurationFile", "LOG_CONFIG_FILE"); err != nil {
+		zap.S().Error(err)
+	}
+	if err = viper.BindEnv("standardLogger", "SET_STANDARD_LOGGER"); err != nil {
+		zap.S().Error(err)
+	}
+	if err = viper.BindEnv("serviceHost", "SERVICE_HOST"); err != nil {
+		zap.S().Error(err)
+	}
+	if err = viper.BindEnv("servicePORT", "SERVICE_PORT"); err != nil {
+		zap.S().Error(err)
+	}
+	if err = viper.BindEnv("serviceAssets", "SERVICE_ASSETS_PATH"); err != nil {
+		zap.S().Error(err)
+	}
+	if err = viper.BindEnv("runAsTest", "SERVICE_TEST"); err != nil {
+		zap.S().Error(err)
+	}
+
+}
+
+// GetConfig creates a structure with adjustments for service
+func GetConfig() (*Config, error) {
+	config := new(Config)
+	config.LogConfigurationFile = viper.GetString("logConfigurationFile")
+	config.LogStandartChois = viper.GetString("standardLogger")
+	config.TestMod = viper.GetBool("runAsTest")
+	config.Service.Host = viper.GetString("serviceHost")
+	config.Service.Port = viper.GetString("servicePORT")
+	config.Service.Assets = viper.GetString("serviceAssets")
+	return config, nil
+}
 
 // CustomTimeEncoder function of own formulating time for output to the log
 func CustomTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {

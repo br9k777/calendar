@@ -1,8 +1,10 @@
-module github.com/br9k777/telnet
+module github.com/br9k777/calendar
 
-go 1.14
+go 1.12
 
 require (
-	github.com/urfave/cli/v2 v2.2.0
-	go.uber.org/zap v1.14.1
+	github.com/davecgh/go-spew v1.1.1
+	github.com/gorilla/mux v1.7.4
+	github.com/spf13/viper v1.6.2
+	go.uber.org/zap v1.14.0
 )
