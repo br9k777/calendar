@@ -1,11 +1,12 @@
 package daemon
 
 import (
-	"github.com/br9k777/calendar/pkg/config"
-	"github.com/br9k777/calendar/pkg/service"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/br9k777/calendar/pkg/config"
+	"github.com/br9k777/calendar/pkg/service"
 
 	"go.uber.org/zap"
 )

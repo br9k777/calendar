@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/br9k777/calendar/pkg/config"
 	"github.com/br9k777/calendar/pkg/daemon"
 
@@ -9,13 +12,16 @@ import (
 )
 
 func main() {
-	logger, _ := zap.NewDevelopment()
+	logger, err := config.GetStandartLogger("production")
+	if err != nil {
+		fmt.Fprintf(os.Stdout, "Can't create logger %s", err)
+		os.Exit(1)
+	}
 	zap.ReplaceGlobals(logger)
 
-	var err error
-	var cfg *config.Config
 	config.InitDefaultConfigSettings()
-	if cfg, err = config.GetConfig(); err != nil {
+	cfg, err := config.GetConfig()
+	if err != nil {
 		zap.S().Fatal(err)
 	}
 	if err = viper.WriteConfigAs(".config.yaml"); err != nil {
